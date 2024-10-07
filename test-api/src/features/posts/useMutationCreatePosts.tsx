@@ -2,7 +2,7 @@ import { useState } from "react";
 import axiosIntence from "../../libs/axios";
 import { ResponsePosts } from "../../types/Types";
 
-export default function useUpdatePosts() {
+export const useCreatePosts = () => {
     const [state, setState] = useState<Omit<ResponsePosts, 'mutate'>>({
         data: null,
         loading: false,
@@ -11,21 +11,16 @@ export default function useUpdatePosts() {
         status: '',
     });
 
-    const updatePosts = async (id:string, content:string) => {
-        setState(prev => ({
-            ...prev,
-            loading: true,
-        }));
-
+    const submit = async (content: string) => {
+        setState(prev => ({ ...prev, loading: true }));
         try {
-            const response = await axiosIntence.put(`/posts/${id}`, { content });
+            const response = await axiosIntence.post('/posts', { content });
             setState(prev => ({
                 ...prev,
                 data: response.data,
                 loading: false,
-                error: null,
             }));
-            window.location.reload();
+            // window.location.reload(); 
         } catch (error) {
             setState(prev => ({
                 ...prev,
@@ -33,11 +28,10 @@ export default function useUpdatePosts() {
                 error: error instanceof Error ? error : new Error('Error fetching posts'),
             }));
         }
-        
     };
 
     return {
         ...state,
-        updatePosts,
+        submit,
     };
 }

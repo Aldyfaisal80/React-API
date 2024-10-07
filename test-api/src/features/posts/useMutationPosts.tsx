@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axiosIntence from "../../libs/axios";
 import { ResponsePosts } from "../../types/Types";
 
-export default function usePosts() {
+export const usePosts = () => {
     const [state, setState] = useState<Omit<ResponsePosts, 'mutate'>>({
         data: null,
         loading: false,

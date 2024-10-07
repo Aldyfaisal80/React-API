@@ -1,14 +1,11 @@
 import { useState } from "react";
-import useCreatePosts from "../../features/product/useCreatePosts";
-import usePosts from "../../features/product/usePosts";
-import useUpdatePosts from "../../features/product/useUpdatePosts";
-import useDeletePosts from "../../features/product/useDeletePosts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import ButtonPrimary from "../../components/elements/ButtonPrimary";
 import Table from "../../components/elements/Table";
 import { Post } from "../../types/Types";
+import { usePosts, useUpdatePosts, useCreatePosts, useDeletePosts } from "../../features/posts";
 
 export default function Product() {
     const { data } = usePosts();

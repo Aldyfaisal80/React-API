@@ -13,5 +13,4 @@ export type ResponsePosts = {
     error: Error | null;
     message: string;
     status: string;
-
 }

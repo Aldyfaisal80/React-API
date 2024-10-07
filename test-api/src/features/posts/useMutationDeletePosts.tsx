@@ -1,8 +1,8 @@
-import { useState } from "react";
-import axiosIntence from "../../libs/axios";
-import { ResponsePosts } from "../../types/Types";
+import { useState } from "react"
+import axiosIntence from "../../libs/axios"
+import { ResponsePosts } from "../../types/Types"
 
-export default function useCreatePosts() {
+export const useDeletePosts = () => {
     const [state, setState] = useState<Omit<ResponsePosts, 'mutate'>>({
         data: null,
         loading: false,
@@ -11,16 +11,20 @@ export default function useCreatePosts() {
         status: '',
     });
 
-    const submit = async (content: string) => {
-        setState(prev => ({ ...prev, loading: true }));
+    const deletePosts = async (id: string) => {
+        setState(prev => ({
+            ...prev,
+            loading: true
+        }))
         try {
-            const response = await axiosIntence.post('/posts', { content });
+            const response = await axiosIntence.delete(`/posts/${id}`)
             setState(prev => ({
                 ...prev,
                 data: response.data,
                 loading: false,
-            }));
-            // window.location.reload(); 
+                error: null
+            }))
+            window.location.reload()
         } catch (error) {
             setState(prev => ({
                 ...prev,
@@ -28,10 +32,10 @@ export default function useCreatePosts() {
                 error: error instanceof Error ? error : new Error('Error fetching posts'),
             }));
         }
-    };
-
+    }
     return {
         ...state,
-        submit,
-    };
+        deletePosts
+
+    }
 }
