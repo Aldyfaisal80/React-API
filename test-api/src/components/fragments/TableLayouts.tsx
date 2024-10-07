@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { z } from "zod";
 import useDeletePosts from "../../features/posts/useMutationDeletePosts";
-import usePosts from "../../features/posts/useMutationPosts";
+import usePosts from "../../features/posts/usePosts";
 import ButtonPrimary from "../elements/ButtonPrimary";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
