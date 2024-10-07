@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axiosIntence from "../../libs/axios";
 import { ResponsePosts } from "../../types/Types";
+import axiosInstance from "../../libs/axios";
 
 export const usePosts = () => {
     const [state, setState] = useState<Omit<ResponsePosts, 'mutate'>>({
@@ -12,26 +12,26 @@ export const usePosts = () => {
     });
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            setState(prev => ({ ...prev }));
-            try {
-                const response = await axiosIntence.get('/posts');
-                setState(prev => ({
-                    ...prev,
-                    data: response.data,
-                }));
-            } catch (error) {
-                setState(prev => ({
-                    ...prev,
-                    loading: false,
-                    error: error instanceof Error ? error : new Error('Error fetching posts'),
-                }));
-            }
-        };
-        fetchPosts();
-    }, []);
+        axiosInstance.get('/posts').then((response) => {
+            setState({
+                data: response.data,
+                loading: false,
+                error: null,
+                message: response.data.message,
+                status: response.data.status,
+            })
+        }
+        ).catch(error =>
+            setState(prev => ({
+                ...prev,
+                loading: false,
+                error: error instanceof Error ? error : new Error('An unknown error occurred'),
+            }))
+        )
+
+    }, [])
 
     return {
         ...state,
-    };
+    }
 }

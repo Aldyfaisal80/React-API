@@ -1,9 +1,9 @@
-import Product from "./pages/product";
+import Posts from "./pages/posts";
 
 export default function App() {
     return (
        <>
-       <Product />
+        <Posts />
        </>
     );
 }

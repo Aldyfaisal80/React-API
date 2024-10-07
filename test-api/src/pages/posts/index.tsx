@@ -7,11 +7,11 @@ import Table from "../../components/elements/Table";
 import { Post } from "../../types/Types";
 import { usePosts, useUpdatePosts, useCreatePosts, useDeletePosts } from "../../features/posts";
 
-export default function Product() {
+export default function Posts() {
     const { data } = usePosts();
-    const { submit, loading, error } = useCreatePosts();
-    const { updatePosts, loading: updateLoading, error: updateError } = useUpdatePosts();
-    const { deletePosts, loading: deleteLoading, error: deleteError } = useDeletePosts();
+    const {mutate: submit, loading, error} = useCreatePosts();
+    const { mutate: updatePosts, loading: updateLoading, error: updateError } = useUpdatePosts();
+    const { mutate: deletePosts, loading: deleteLoading, error: deleteError } = useDeletePosts();
 
     const [editPostId, setEditPostId] = useState<string | null>(null);
     const [editContent, setEditContent] = useState<string>("");
@@ -36,7 +36,7 @@ export default function Product() {
         if (editPostId) {
             await updatePosts(editPostId, editContent);
         } else {
-            await submit(editContent);
+            submit(editContent);
             window.location.reload();
         }
         setEditPostId(null);
